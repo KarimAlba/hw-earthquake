@@ -1,35 +1,61 @@
 .root {
   position: relative;
-  border: 1px solid var(--color-border);
-  border-radius: 16px;
+  border: 1px solid var(--color-border-strong);
+  border-radius: var(--radius-lg);
   overflow: hidden;
-  background: var(--color-surface);
-  min-block-size: 22rem;
+  background: var(--color-bg-deep);
+  box-shadow:
+    var(--shadow-soft),
+    inset 0 1px 0 rgb(255 255 255 / 4%);
 }
 
-.map {
-  block-size: 22rem;
+.mapFrame {
+  block-size: 24rem;
+  min-block-size: 24rem;
   width: 100%;
+}
+
+.mapHost {
+  block-size: 100%;
+  min-block-size: 24rem;
+  width: 100%;
+}
+
+.emptyHint {
+  position: absolute;
+  z-index: 1000;
+  inset-block-start: 0.75rem;
+  inset-inline-start: 0.75rem;
+  margin: 0;
+  padding: 0.4rem 0.75rem;
+  border: 1px solid var(--color-border-strong);
+  border-radius: 999px;
+  background: rgb(7 15 19 / 82%);
+  color: var(--color-muted);
+  font-size: 0.82rem;
+  font-weight: 600;
+  pointer-events: none;
 }
 
 .overlay {
   position: absolute;
   inset: 0;
-  z-index: 500;
+  z-index: 1001;
   display: grid;
   place-items: center;
   margin: 0;
-  padding: 1rem;
+  padding: 1.25rem;
   text-align: center;
   color: var(--color-muted);
-  background: rgb(255 253 248 / 82%);
+  background: rgb(7 15 19 / 78%);
   pointer-events: none;
+  font-weight: 500;
 }
 
 @media (max-width: 860px) {
-  .root,
-  .map {
-    min-block-size: 18rem;
-    block-size: 18rem;
+  .mapFrame,
+  .mapHost {
+    block-size: 20rem;
+    min-block-size: 20rem;
   }
 }

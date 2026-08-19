@@ -78,35 +78,45 @@ export function WeekEarthquakesPage() {
 
   return (
     <div className={styles.page}>
-      <header className={styles.header}>
-        <div>
+      <header className={`${styles.header} anim-rise`}>
+        <div className={styles.hero}>
           <p className={styles.eyebrow}>USGS · текущая неделя</p>
-          <h1 className={styles.title}>Землетрясения пн–вс</h1>
+          <h1 className={styles.title}>
+            Землетрясения
+            <span className={styles.titleAccent}>пн–вс</span>
+          </h1>
           <p className={styles.subtitle}>
             Список и карта событий за выбранный день. Клик по записи или маркеру открывает детали.
           </p>
         </div>
-        <MagnitudeFilter
-          value={minMagnitude}
-          onChange={(value) => {
-            setMinMagnitude(value)
+        <div className={`${styles.filterWrap} anim-rise anim-delay-1`}>
+          <MagnitudeFilter
+            value={minMagnitude}
+            onChange={(value) => {
+              setMinMagnitude(value)
+              setSelectedId(null)
+            }}
+          />
+        </div>
+      </header>
+
+      <div className='anim-rise anim-delay-2'>
+        <DaySelector
+          days={weekDays}
+          selectedDay={selectedDay}
+          today={today}
+          onSelect={(day) => {
+            setPinnedDay(day)
             setSelectedId(null)
           }}
         />
-      </header>
-
-      <DaySelector
-        days={weekDays}
-        selectedDay={selectedDay}
-        today={today}
-        onSelect={(day) => {
-          setPinnedDay(day)
-          setSelectedId(null)
-        }}
-      />
+      </div>
 
       <div className={styles.layout}>
-        <section className={styles.listPanel} aria-label='Список землетрясений'>
+        <section
+          className={`${styles.listPanel} anim-rise anim-delay-3`}
+          aria-label='Список землетрясений'
+        >
           <EarthquakeList
             items={visibleItems}
             selectedId={selectedEarthquake?.id ?? null}

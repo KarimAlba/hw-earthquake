@@ -14,6 +14,7 @@ type EarthquakeMapProps = {
 
 const DEFAULT_CENTER: L.LatLngExpression = [20, 0]
 const DEFAULT_ZOOM = 2
+const MAP_HEIGHT_PX = 384
 
 function escapeHtml(value: string): string {
   return value
@@ -31,12 +32,20 @@ function markerRadius(magnitude: number | null): number {
 
 function markerStyle(isSelected: boolean): L.CircleMarkerOptions {
   return {
-    color: isSelected ? '#1f5245' : '#2f6f5e',
-    fillColor: isSelected ? '#b45d1e' : '#7aa798',
+    color: isSelected ? '#ffb347' : '#3d8b7a',
+    fillColor: isSelected ? '#e85d04' : '#5cb8a3',
     weight: isSelected ? 3 : 2,
     opacity: 1,
-    fillOpacity: isSelected ? 0.9 : 0.7,
+    fillOpacity: isSelected ? 0.95 : 0.75,
   }
+}
+
+function resetLeafletContainer(container: HTMLDivElement) {
+  const leafletContainer = container as HTMLDivElement & { _leaflet_id?: number }
+  if (leafletContainer._leaflet_id != null) {
+    delete leafletContainer._leaflet_id
+  }
+  container.replaceChildren()
 }
 
 export function EarthquakeMap({ items, selectedId, status, onSelect }: EarthquakeMapProps) {
@@ -61,6 +70,9 @@ export function EarthquakeMap({ items, selectedId, status, onSelect }: Earthquak
       return
     }
 
+    resetLeafletContainer(container)
+    container.style.height = `${MAP_HEIGHT_PX}px`
+
     const map = L.map(container, {
       scrollWheelZoom: true,
     }).setView(DEFAULT_CENTER, DEFAULT_ZOOM)
@@ -74,20 +86,28 @@ export function EarthquakeMap({ items, selectedId, status, onSelect }: Earthquak
     mapRef.current = map
     layerRef.current = layer
 
-    const resizeObserver = new ResizeObserver(() => {
+    const invalidate = () => {
       map.invalidateSize()
-    })
+    }
+
+    map.whenReady(invalidate)
+
+    const resizeObserver = new ResizeObserver(invalidate)
     resizeObserver.observe(container)
 
-    requestAnimationFrame(() => {
-      map.invalidateSize()
-    })
+    requestAnimationFrame(invalidate)
+    const resizeTimer = window.setTimeout(invalidate, 100)
+    const resizeTimerLate = window.setTimeout(invalidate, 800)
 
     return () => {
+      window.clearTimeout(resizeTimer)
+      window.clearTimeout(resizeTimerLate)
       resizeObserver.disconnect()
       map.remove()
       mapRef.current = null
       layerRef.current = null
+      markersRef.current.clear()
+      resetLeafletContainer(container)
     }
   }, [])
 
@@ -139,6 +159,17 @@ export function EarthquakeMap({ items, selectedId, status, onSelect }: Earthquak
   }, [items, status])
 
   useEffect(() => {
+    const map = mapRef.current
+    if (!map || status !== 'success') {
+      return
+    }
+
+    requestAnimationFrame(() => {
+      map.invalidateSize()
+    })
+  }, [status, items.length])
+
+  useEffect(() => {
     for (const [id, marker] of markersRef.current) {
       marker.setStyle(markerStyle(id === selectedId))
     }
@@ -162,13 +193,20 @@ export function EarthquakeMap({ items, selectedId, status, onSelect }: Earthquak
     overlay = 'Карта загрузится вместе со списком…'
   } else if (status === 'error') {
     overlay = 'Нет данных для карты'
-  } else if (items.length === 0) {
-    overlay = 'Нет точек для отображения'
   }
+
+  const emptyHint = status === 'success' && items.length === 0 ? 'Нет точек для отображения' : null
 
   return (
     <section className={styles.root} aria-label='Карта землетрясений'>
-      <div ref={containerRef} className={styles.map} />
+      <div className={styles.mapFrame}>
+        <div ref={containerRef} className={styles.mapHost} />
+      </div>
+      {emptyHint ? (
+        <p className={styles.emptyHint} aria-live='polite'>
+          {emptyHint}
+        </p>
+      ) : null}
       {overlay ? (
         <p className={styles.overlay} aria-live='polite'>
           {overlay}
