@@ -51,6 +51,7 @@ export function WeekEarthquakesPage() {
     async function load() {
       setStatus('loading')
       setErrorMessage(null)
+      setSelectedId(null)
 
       try {
         const data = await fetchEarthquakesForWeek({
