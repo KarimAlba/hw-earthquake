@@ -26,4 +26,26 @@
 
 ---
 
-`[Ваши записи — ниже.]`
+## 2026-08-19 · Сессия 2 · Vite + React 19 + TypeScript
+
+- **Тип:** CLI / библиотека
+- **Установка:** `npm create vite@latest earthquakes -- --template react-ts` затем `npm install` в `earthquakes/`
+- **Зачем:** каркас frontend-приложения по согласованному стеку
+- **Область:** проект (`earthquakes/`)
+- **Проверка:** `npm run build` успешен; `npm run dev` → `http://localhost:5173/`
+
+## 2026-08-19 · Сессия 2 · sass 1.102.0
+
+- **Тип:** библиотека
+- **Установка:** `npm install -D sass` в `earthquakes/`
+- **Зачем:** SCSS и CSS-модули в Vite
+- **Область:** проект (`earthquakes/`)
+- **Проверка:** стили собрались в `npm run build` (есть `.css` в `dist/assets`)
+
+## 2026-08-19 · Сессия 2 · USGS Earthquake API
+
+- **Тип:** сервис
+- **Установка:** без установки; `https://earthquake.usgs.gov/fdsnws/event/1/query`
+- **Зачем:** данные землетрясений за текущую неделю
+- **Область:** проект (клиентский fetch)
+- **Проверка:** `node` fetch вернул HTTP 200 и feature; UI грузит тот же endpoint

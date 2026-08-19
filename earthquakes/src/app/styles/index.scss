@@ -1,0 +1,51 @@
+:root {
+  color-scheme: light;
+  --color-bg: #f3efe6;
+  --color-surface: #fffdf8;
+  --color-text: #1f2a24;
+  --color-muted: #5f6b63;
+  --color-border: #d7d0c3;
+  --color-accent: #2f6f5e;
+  --color-accent-muted: #7aa798;
+  --color-accent-soft: #e4f1ec;
+  --color-accent-strong: #1f5245;
+  --color-today: #b45d1e;
+  --font-sans: "Segoe UI", "Trebuchet MS", sans-serif;
+
+  font-family: var(--font-sans);
+  line-height: 1.5;
+  font-weight: 400;
+  color: var(--color-text);
+  background:
+    radial-gradient(circle at top left, #efe4cf 0, transparent 42%),
+    linear-gradient(180deg, #f7f3ea 0%, var(--color-bg) 55%);
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100dvh;
+}
+
+#root {
+  min-height: 100dvh;
+}
+
+button,
+input {
+  font: inherit;
+}
+
+a {
+  color: inherit;
+}

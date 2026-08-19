@@ -8,14 +8,16 @@
 
 React 19+ · TypeScript · SCSS · Vite · Feature-Sliced Design (FSD)
 
+Код приложения: папка [`earthquakes/`](./earthquakes/).
+
 ## Статус
 
 | Этап | Состояние |
 |---|---|
 | Спецификация (`SPEC.md`) | готова |
 | Правила проекта (`AGENTS.md`, ч. II) | заполнены |
-| Журнал (`sessions/`) | сессия 1 |
-| Каркас приложения | ещё не поднят |
+| Журнал (`sessions/`) | сессии 1–2 |
+| Каркас приложения | MVP в `earthquakes/` |
 | Карта Leaflet | отложена по спеке |
 
 ## Важно про сроки
@@ -35,11 +37,18 @@ React 19+ · TypeScript · SCSS · Vite · Feature-Sliced Design (FSD)
 
 ## Запуск
 
-Приложение ещё не инициализировано. После появления кода здесь будут команды:
-
 ```bash
+cd earthquakes
 npm install
 npm run dev
+```
+
+Сборка и линт:
+
+```bash
+cd earthquakes
+npm run build
+npm run lint
 ```
 
 ## Автор работы

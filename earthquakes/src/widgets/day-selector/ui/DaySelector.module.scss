@@ -1,0 +1,66 @@
+.root {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 0.4rem;
+}
+
+.day {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.15rem;
+  padding: 0.65rem 0.25rem 0.55rem;
+  border: 1px solid var(--color-border);
+  border-radius: 12px;
+  background: var(--color-surface);
+  color: var(--color-text);
+  cursor: pointer;
+  transition:
+    border-color 0.15s ease,
+    background-color 0.15s ease,
+    transform 0.15s ease;
+
+  &:hover {
+    border-color: var(--color-accent-muted);
+  }
+}
+
+.selected {
+  border-color: var(--color-accent);
+  background: var(--color-accent-soft);
+  box-shadow: inset 0 0 0 1px var(--color-accent);
+}
+
+.today:not(.selected) {
+  border-color: var(--color-today);
+}
+
+.label {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--color-muted);
+}
+
+.date {
+  font-size: 1.15rem;
+  font-weight: 700;
+  line-height: 1.1;
+}
+
+.badge {
+  font-size: 0.65rem;
+  color: var(--color-today);
+  font-weight: 600;
+}
+
+@media (max-width: 640px) {
+  .badge {
+    display: none;
+  }
+
+  .day {
+    padding-block: 0.5rem;
+  }
+}

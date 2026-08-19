@@ -1,0 +1,44 @@
+.root {
+  padding: 1rem 1.1rem;
+  border: 1px solid var(--color-border);
+  border-radius: 16px;
+  background: var(--color-surface);
+  min-block-size: 12rem;
+}
+
+.title {
+  margin: 0 0 0.85rem;
+  font-size: 1rem;
+}
+
+.grid {
+  margin: 0;
+  display: grid;
+  gap: 0.75rem;
+
+  dt {
+    margin: 0;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--color-muted);
+  }
+
+  dd {
+    margin: 0.2rem 0 0;
+    font-weight: 600;
+    line-height: 1.35;
+  }
+}
+
+.empty {
+  margin: 0;
+  color: var(--color-muted);
+}
+
+.link {
+  display: inline-block;
+  margin-block-start: 1rem;
+  color: var(--color-accent-strong);
+  font-weight: 600;
+}
