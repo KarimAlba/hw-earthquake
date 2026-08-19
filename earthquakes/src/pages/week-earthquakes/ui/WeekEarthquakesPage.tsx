@@ -6,6 +6,7 @@ import { passesMagnitudeFilter, type MagnitudeFilterValue } from '../model/magni
 import { DaySelector } from './DaySelector'
 import { EarthquakeDetails } from './EarthquakeDetails'
 import { EarthquakeList } from './EarthquakeList'
+import { EarthquakeMap } from './EarthquakeMap'
 import { MagnitudeFilter } from './MagnitudeFilter'
 import styles from './WeekEarthquakesPage.module.scss'
 
@@ -81,7 +82,9 @@ export function WeekEarthquakesPage() {
         <div>
           <p className={styles.eyebrow}>USGS · текущая неделя</p>
           <h1 className={styles.title}>Землетрясения пн–вс</h1>
-          <p className={styles.subtitle}>Список событий за выбранный день. Карта появится позже.</p>
+          <p className={styles.subtitle}>
+            Список и карта событий за выбранный день. Клик по записи или маркеру открывает детали.
+          </p>
         </div>
         <MagnitudeFilter
           value={minMagnitude}
@@ -114,7 +117,15 @@ export function WeekEarthquakesPage() {
             onRetry={() => setReloadToken((value) => value + 1)}
           />
         </section>
-        <EarthquakeDetails earthquake={selectedEarthquake} />
+        <div className={styles.mapPanel}>
+          <EarthquakeMap
+            items={visibleItems}
+            selectedId={selectedEarthquake?.id ?? null}
+            status={status}
+            onSelect={setSelectedId}
+          />
+          <EarthquakeDetails earthquake={selectedEarthquake} />
+        </div>
       </div>
     </div>
   )

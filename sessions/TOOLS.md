@@ -81,3 +81,19 @@
 - **Зачем:** lint SCSS/CSS-модулей; часть `npm run lint`
 - **Область:** проект (`earthquakes/src/`)
 - **Проверка:** `npm run lint:styles`
+
+## 2026-08-19 · Сессия 8 · leaflet 1.9.4
+
+- **Тип:** библиотека
+- **Установка:** `npm install leaflet` в `earthquakes/`
+- **Зачем:** карта землетрясений (OSM-тайлы, CircleMarker, popup)
+- **Область:** проект (`earthquakes/`)
+- **Проверка:** `npm run build` / `npm run lint`; карта в UI
+
+## 2026-08-19 · Сессия 8 · @types/leaflet 1.9.22
+
+- **Тип:** библиотека (типы)
+- **Установка:** `npm install -D @types/leaflet` в `earthquakes/`
+- **Зачем:** TypeScript-типы для Leaflet без react-leaflet
+- **Область:** проект (`earthquakes/`)
+- **Проверка:** `npm run typecheck` / `npm run build`

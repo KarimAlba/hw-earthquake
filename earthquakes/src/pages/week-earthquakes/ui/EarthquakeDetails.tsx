@@ -11,7 +11,7 @@ export function EarthquakeDetails({ earthquake }: EarthquakeDetailsProps) {
     return (
       <aside className={styles.root} aria-live='polite'>
         <h2 className={styles.title}>Детали</h2>
-        <p className={styles.empty}>Выберите событие в списке</p>
+        <p className={styles.empty}>Выберите событие в списке или на карте</p>
       </aside>
     )
   }

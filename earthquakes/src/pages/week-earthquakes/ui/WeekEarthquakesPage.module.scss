@@ -37,12 +37,19 @@
 
 .layout {
   display: grid;
-  grid-template-columns: minmax(0, 1.4fr) minmax(16rem, 0.9fr);
+  grid-template-columns: minmax(0, 1.15fr) minmax(18rem, 1.1fr);
   gap: 1rem;
   align-items: start;
 }
 
 .listPanel {
+  min-width: 0;
+}
+
+.mapPanel {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
   min-width: 0;
 }
 

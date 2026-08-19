@@ -9,7 +9,7 @@ Frontend-приложение репозитория. Общая визитка 
 - Фильтр: все / ≥2.5 / ≥4.5 / ≥6.0 (в т.ч. события без магнитуды на «Все»)
 - Разные сообщения для пустого дня и пустого результата фильтра
 - Детали по клику; загрузка / ошибка + «Повторить»
-- Карта Leaflet — ещё не в этой версии
+- Карта Leaflet: маркеры видимых событий, popup (место + M), sync со списком
 
 ## Требования
 
@@ -32,4 +32,4 @@ npm run preview
 
 ## Стек
 
-React 19 · TypeScript · SCSS (sass) · Vite · FSD · oxlint · stylelint · prettier · husky · commitlint
+React 19 · TypeScript · SCSS (sass) · Vite · Leaflet · FSD · oxlint · stylelint · prettier · husky · commitlint

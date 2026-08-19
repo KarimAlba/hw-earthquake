@@ -1,0 +1,35 @@
+.root {
+  position: relative;
+  border: 1px solid var(--color-border);
+  border-radius: 16px;
+  overflow: hidden;
+  background: var(--color-surface);
+  min-block-size: 22rem;
+}
+
+.map {
+  block-size: 22rem;
+  width: 100%;
+}
+
+.overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 500;
+  display: grid;
+  place-items: center;
+  margin: 0;
+  padding: 1rem;
+  text-align: center;
+  color: var(--color-muted);
+  background: rgb(255 253 248 / 82%);
+  pointer-events: none;
+}
+
+@media (max-width: 860px) {
+  .root,
+  .map {
+    min-block-size: 18rem;
+    block-size: 18rem;
+  }
+}
