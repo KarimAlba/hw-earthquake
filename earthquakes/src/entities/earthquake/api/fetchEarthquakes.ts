@@ -41,7 +41,5 @@ export async function fetchEarthquakesForWeek({
 
   const data = await getJson<UsgsGeoJson>(url.toString(), signal)
 
-  return data.features
-    .map(mapUsgsFeature)
-    .filter((item): item is Earthquake => item !== null)
+  return data.features.map(mapUsgsFeature).filter((item): item is Earthquake => item !== null)
 }

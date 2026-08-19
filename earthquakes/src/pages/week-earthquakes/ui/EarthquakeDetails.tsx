@@ -1,9 +1,5 @@
 import type { Earthquake } from '@/entities/earthquake'
-import {
-  formatDateTimeRu,
-  formatDepthKm,
-  formatMagnitude,
-} from '@/shared/lib/format'
+import { formatDateTimeRu, formatDepthKm, formatMagnitude } from '@/shared/lib/format'
 import styles from './EarthquakeDetails.module.scss'
 
 type EarthquakeDetailsProps = {
@@ -13,7 +9,7 @@ type EarthquakeDetailsProps = {
 export function EarthquakeDetails({ earthquake }: EarthquakeDetailsProps) {
   if (!earthquake) {
     return (
-      <aside className={styles.root} aria-live="polite">
+      <aside className={styles.root} aria-live='polite'>
         <h2 className={styles.title}>Детали</h2>
         <p className={styles.empty}>Выберите событие в списке</p>
       </aside>
@@ -21,7 +17,7 @@ export function EarthquakeDetails({ earthquake }: EarthquakeDetailsProps) {
   }
 
   return (
-    <aside className={styles.root} aria-live="polite">
+    <aside className={styles.root} aria-live='polite'>
       <h2 className={styles.title}>Детали</h2>
       <dl className={styles.grid}>
         <div>
@@ -48,12 +44,7 @@ export function EarthquakeDetails({ earthquake }: EarthquakeDetailsProps) {
         </div>
       </dl>
       {earthquake.url ? (
-        <a
-          className={styles.link}
-          href={earthquake.url}
-          target="_blank"
-          rel="noreferrer"
-        >
+        <a className={styles.link} href={earthquake.url} target='_blank' rel='noreferrer'>
           Карточка USGS
         </a>
       ) : null}

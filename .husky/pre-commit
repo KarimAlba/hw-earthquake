@@ -1,0 +1,11 @@
+#!/bin/sh
+
+REBASE_PATH="$(git rev-parse --git-path rebase-merge)"
+MERGE_PATH="$(git rev-parse --git-path MERGE_HEAD)"
+
+if [ -d "$REBASE_PATH" ] || [ -f "$MERGE_PATH" ]; then
+  echo "Skipping Husky pre-commit hook: We are in the middle of a rebase or merge."
+else
+  echo "Running Husky pre-commit hook: lint"
+  npm run pre-commit-lint --prefix earthquakes
+fi

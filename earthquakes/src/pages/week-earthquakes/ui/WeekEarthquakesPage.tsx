@@ -1,18 +1,8 @@
 import { useEffect, useMemo, useState } from 'react'
-import {
-  fetchEarthquakesForWeek,
-  type Earthquake,
-} from '@/entities/earthquake'
-import {
-  getWeekDays,
-  getWeekMonday,
-  isSameLocalDay,
-} from '@/shared/lib/week'
+import { fetchEarthquakesForWeek, type Earthquake } from '@/entities/earthquake'
+import { getWeekDays, getWeekMonday, isSameLocalDay } from '@/shared/lib/week'
 import { useLocalToday } from '../lib/useLocalToday'
-import {
-  passesMagnitudeFilter,
-  type MagnitudeFilterValue,
-} from '../model/magnitudeFilter'
+import { passesMagnitudeFilter, type MagnitudeFilterValue } from '../model/magnitudeFilter'
 import { DaySelector } from './DaySelector'
 import { EarthquakeDetails } from './EarthquakeDetails'
 import { EarthquakeList } from './EarthquakeList'
@@ -36,10 +26,7 @@ export function WeekEarthquakesPage() {
   const [reloadToken, setReloadToken] = useState(0)
 
   const selectedDay = useMemo(() => {
-    if (
-      pinnedDay &&
-      weekDays.some((day) => isSameLocalDay(day, pinnedDay))
-    ) {
+    if (pinnedDay && weekDays.some((day) => isSameLocalDay(day, pinnedDay))) {
       return weekDays.find((day) => isSameLocalDay(day, pinnedDay)) ?? today
     }
     return today
@@ -67,11 +54,7 @@ export function WeekEarthquakesPage() {
         }
         setItems([])
         setStatus('error')
-        setErrorMessage(
-          error instanceof Error
-            ? error.message
-            : 'Не удалось загрузить данные.',
-        )
+        setErrorMessage(error instanceof Error ? error.message : 'Не удалось загрузить данные.')
       }
     }
 
@@ -81,19 +64,14 @@ export function WeekEarthquakesPage() {
   }, [monday, sunday, reloadToken])
 
   const dayItems = useMemo(() => {
-    return items.filter((item) =>
-      isSameLocalDay(new Date(item.timeMs), selectedDay),
-    )
+    return items.filter((item) => isSameLocalDay(new Date(item.timeMs), selectedDay))
   }, [items, selectedDay])
 
   const visibleItems = useMemo(() => {
-    return dayItems.filter((item) =>
-      passesMagnitudeFilter(item.magnitude, minMagnitude),
-    )
+    return dayItems.filter((item) => passesMagnitudeFilter(item.magnitude, minMagnitude))
   }, [dayItems, minMagnitude])
 
-  const selectedEarthquake =
-    visibleItems.find((item) => item.id === selectedId) ?? null
+  const selectedEarthquake = visibleItems.find((item) => item.id === selectedId) ?? null
 
   const emptyReason = dayItems.length === 0 ? 'no-events' : 'filtered'
 
@@ -103,9 +81,7 @@ export function WeekEarthquakesPage() {
         <div>
           <p className={styles.eyebrow}>USGS · текущая неделя</p>
           <h1 className={styles.title}>Землетрясения пн–вс</h1>
-          <p className={styles.subtitle}>
-            Список событий за выбранный день. Карта появится позже.
-          </p>
+          <p className={styles.subtitle}>Список событий за выбранный день. Карта появится позже.</p>
         </div>
         <MagnitudeFilter
           value={minMagnitude}
@@ -127,7 +103,7 @@ export function WeekEarthquakesPage() {
       />
 
       <div className={styles.layout}>
-        <section className={styles.listPanel} aria-label="Список землетрясений">
+        <section className={styles.listPanel} aria-label='Список землетрясений'>
           <EarthquakeList
             items={visibleItems}
             selectedId={selectedEarthquake?.id ?? null}

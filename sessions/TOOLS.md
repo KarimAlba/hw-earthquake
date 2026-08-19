@@ -49,3 +49,35 @@
 - **Зачем:** данные землетрясений за текущую неделю
 - **Область:** проект (клиентский fetch)
 - **Проверка:** `node` fetch вернул HTTP 200 и feature; UI грузит тот же endpoint
+
+## 2026-08-19 · Сессия 6 · husky 9.1.7
+
+- **Тип:** хук
+- **Установка:** `npm install -D husky` в `earthquakes/`, скрипт `"prepare": "cd .. && husky"`
+- **Зачем:** pre-commit (полный lint) и commit-msg (commitlint)
+- **Область:** репозиторий (`.husky/` в корне)
+- **Проверка:** `sh .husky/pre-commit` проходит; `core.hooksPath` → `.husky/_`
+
+## 2026-08-19 · Сессия 6 · @commitlint/cli 21.0.1 + config-conventional
+
+- **Тип:** CLI
+- **Установка:** `npm install -D @commitlint/cli @commitlint/config-conventional` в `earthquakes/`
+- **Зачем:** conventional commit messages в хуке commit-msg
+- **Область:** репозиторий (`.commitlintrc.js` в корне)
+- **Проверка:** `echo "fix: test" | npm exec --prefix earthquakes commitlint` — ok; `bad message` — fail
+
+## 2026-08-19 · Сессия 6 · prettier 3.8.3
+
+- **Тип:** CLI
+- **Установка:** `npm install -D prettier` в `earthquakes/`
+- **Зачем:** единый формат TS/TSX/JSON/MD/SCSS; часть `npm run lint`
+- **Область:** проект (`earthquakes/`)
+- **Проверка:** `npm run lint:prettier` после `--write`
+
+## 2026-08-19 · Сессия 6 · stylelint 17.12.0 + standard-scss
+
+- **Тип:** CLI
+- **Установка:** `npm install -D stylelint stylelint-config-standard-scss stylelint-config-prettier-scss` в `earthquakes/`
+- **Зачем:** lint SCSS/CSS-модулей; часть `npm run lint`
+- **Область:** проект (`earthquakes/src/`)
+- **Проверка:** `npm run lint:styles`

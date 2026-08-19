@@ -8,14 +8,9 @@ type DaySelectorProps = {
   onSelect: (day: Date) => void
 }
 
-export function DaySelector({
-  days,
-  selectedDay,
-  today,
-  onSelect,
-}: DaySelectorProps) {
+export function DaySelector({ days, selectedDay, today, onSelect }: DaySelectorProps) {
   return (
-    <div className={styles.root} role="tablist" aria-label="Дни недели">
+    <div className={styles.root} role='tablist' aria-label='Дни недели'>
       {days.map((day) => {
         const isSelected = isSameLocalDay(day, selectedDay)
         const isToday = isSameLocalDay(day, today)
@@ -23,14 +18,10 @@ export function DaySelector({
         return (
           <button
             key={day.toISOString()}
-            type="button"
-            role="tab"
+            type='button'
+            role='tab'
             aria-selected={isSelected}
-            className={[
-              styles.day,
-              isSelected ? styles.selected : '',
-              isToday ? styles.today : '',
-            ]
+            className={[styles.day, isSelected ? styles.selected : '', isToday ? styles.today : '']
               .filter(Boolean)
               .join(' ')}
             onClick={() => onSelect(day)}

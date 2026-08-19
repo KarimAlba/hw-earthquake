@@ -29,9 +29,9 @@ export function EarthquakeList({
 
   if (status === 'error') {
     return (
-      <div className={styles.state} role="alert">
+      <div className={styles.state} role='alert'>
         <p>{errorMessage ?? 'Не удалось загрузить данные.'}</p>
-        <button type="button" className={styles.retry} onClick={onRetry}>
+        <button type='button' className={styles.retry} onClick={onRetry}>
           Повторить
         </button>
       </div>
@@ -55,18 +55,14 @@ export function EarthquakeList({
         return (
           <li key={item.id}>
             <button
-              type="button"
-              className={[styles.item, isSelected ? styles.selected : '']
-                .filter(Boolean)
-                .join(' ')}
+              type='button'
+              className={[styles.item, isSelected ? styles.selected : ''].filter(Boolean).join(' ')}
               onClick={() => onSelect(item.id)}
             >
               <span className={styles.mag}>{formatMagnitude(item.magnitude)}</span>
               <span className={styles.body}>
                 <span className={styles.place}>{item.place}</span>
-                <span className={styles.time}>
-                  {formatDateTimeRu(item.timeMs)}
-                </span>
+                <span className={styles.time}>{formatDateTimeRu(item.timeMs)}</span>
               </span>
             </button>
           </li>

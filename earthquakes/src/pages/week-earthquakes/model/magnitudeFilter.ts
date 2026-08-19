@@ -5,8 +5,7 @@ export const MAGNITUDE_FILTER_OPTIONS = [
   { value: 6, label: '≥ 6.0' },
 ] as const
 
-export type MagnitudeFilterValue =
-  (typeof MAGNITUDE_FILTER_OPTIONS)[number]['value']
+export type MagnitudeFilterValue = (typeof MAGNITUDE_FILTER_OPTIONS)[number]['value']
 
 export function passesMagnitudeFilter(
   magnitude: number | null,

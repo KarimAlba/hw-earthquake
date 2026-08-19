@@ -1,0 +1,3 @@
+#!/bin/sh
+
+npm exec --prefix earthquakes -- commitlint --edit "$1"

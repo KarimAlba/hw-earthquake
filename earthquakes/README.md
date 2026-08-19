@@ -22,11 +22,14 @@ npm install
 npm run dev      # http://localhost:5173/
 npm run build
 npm run lint
+npm run lint:fix # prettier + stylelint --fix
 npm run preview
 ```
+
+После `npm install` автоматически подключаются git-хуки Husky (pre-commit: полный lint, commit-msg: commitlint).
 
 Все команды запускайте **из этой папки** (`earthquakes/`).
 
 ## Стек
 
-React 19 · TypeScript · SCSS (sass) · Vite · FSD · oxlint
+React 19 · TypeScript · SCSS (sass) · Vite · FSD · oxlint · stylelint · prettier · husky · commitlint
