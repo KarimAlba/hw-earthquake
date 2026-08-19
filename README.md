@@ -2,23 +2,72 @@
 
 Веб-приложение для просмотра землетрясений **текущей календарной недели** (пн–вс) по данным [USGS](https://earthquake.usgs.gov/).
 
-Роль в ДЗ: **Frontend**. MVP — список событий, фильтр по магнитуде и детали по клику; карта на Leaflet — следующим этапом.
+Роль в ДЗ: **Frontend**.  
+Код: [`earthquakes/`](./earthquakes/).
+
+## Что умеет MVP
+
+- Полоса дней **пн–вс**: текущий день подсвечен и выбран по умолчанию
+- Список событий выбранного дня (данные USGS за всю неделю, фильтр на клиенте)
+- Фильтр магнитуды: **все / ≥2.5 / ≥4.5 / ≥6.0**
+- Клик по записи → детали (место, магнитуда, время, глубина, координаты)
+- Состояния: загрузка, пустой день, ошибка с кнопкой «Повторить»
+- UI на русском; карта Leaflet **пока не подключена** (следующий этап)
 
 ## Стек
 
-React 19+ · TypeScript · SCSS · Vite · Feature-Sliced Design (FSD)
+React 19 · TypeScript · SCSS · Vite 8 · Feature-Sliced Design (FSD)
 
-Код приложения: папка [`earthquakes/`](./earthquakes/).
+## Запуск
+
+Нужны Node.js и npm.
+
+```bash
+cd earthquakes
+npm install
+npm run dev
+```
+
+Откройте URL из вывода Vite (обычно [http://localhost:5173/](http://localhost:5173/)).
+
+Сборка и линт:
+
+```bash
+cd earthquakes
+npm run build
+npm run lint
+```
+
+Превью production-сборки:
+
+```bash
+cd earthquakes
+npm run preview
+```
+
+## Структура приложения
+
+```text
+earthquakes/src/
+  app/                 # точка входа UI, глобальные стили
+  pages/week-earthquakes/
+  widgets/             # day-selector, earthquake-list, earthquake-details
+  features/filter-by-magnitude/
+  entities/earthquake/ # модель + USGS API
+  shared/              # week/format helpers, http, config
+```
+
+Подробности по приёмке — в [`SPEC.md`](./SPEC.md). Правила для агента — в [`AGENTS.md`](./AGENTS.md).
 
 ## Статус
 
 | Этап | Состояние |
 |---|---|
-| Спецификация (`SPEC.md`) | готова |
-| Правила проекта (`AGENTS.md`, ч. II) | заполнены |
+| Спецификация | готова |
+| Правила (`AGENTS.md`, ч. II) | заполнены |
 | Журнал (`sessions/`) | сессии 1–2 |
-| Каркас приложения | MVP в `earthquakes/` |
-| Карта Leaflet | отложена по спеке |
+| MVP без карты | готов в `earthquakes/` |
+| Leaflet | не начат |
 
 ## Важно про сроки
 
@@ -30,26 +79,11 @@ React 19+ · TypeScript · SCSS · Vite · Feature-Sliced Design (FSD)
 | Файл | Зачем |
 |---|---|
 | [`SPEC.md`](./SPEC.md) | Что делаем / не делаем, сценарии, критерии приёмки |
-| [`AGENTS.md`](./AGENTS.md) | Правила для AI-агента (курс + настройки проекта) |
-| [`HOMEWORK.md`](./HOMEWORK.md) | Исходное техзадание / инструкция курса по выполнению ДЗ |
-| [`homework.pdf`](./homework.pdf) | Полное описание ДЗ, роли и состав сдачи |
+| [`AGENTS.md`](./AGENTS.md) | Правила для AI-агента |
+| [`HOMEWORK.md`](./HOMEWORK.md) | Исходное техзадание курса |
+| [`homework.pdf`](./homework.pdf) | Полное описание ДЗ |
 | [`sessions/`](./sessions/) | Журнал работы |
-
-## Запуск
-
-```bash
-cd earthquakes
-npm install
-npm run dev
-```
-
-Сборка и линт:
-
-```bash
-cd earthquakes
-npm run build
-npm run lint
-```
+| [`earthquakes/`](./earthquakes/) | Исходники приложения |
 
 ## Автор работы
 
