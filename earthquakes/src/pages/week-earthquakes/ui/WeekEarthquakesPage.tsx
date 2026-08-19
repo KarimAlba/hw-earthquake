@@ -4,35 +4,46 @@ import {
   type Earthquake,
 } from '@/entities/earthquake'
 import {
-  MagnitudeFilter,
-  type MagnitudeFilterValue,
-} from '@/features/filter-by-magnitude'
-import { DaySelector } from '@/widgets/day-selector'
-import { EarthquakeDetails } from '@/widgets/earthquake-details'
-import { EarthquakeList } from '@/widgets/earthquake-list'
-import {
   getWeekDays,
   getWeekMonday,
   isSameLocalDay,
-  startOfLocalDay,
 } from '@/shared/lib/week'
+import { useLocalToday } from '../lib/useLocalToday'
+import {
+  passesMagnitudeFilter,
+  type MagnitudeFilterValue,
+} from '../model/magnitudeFilter'
+import { DaySelector } from './DaySelector'
+import { EarthquakeDetails } from './EarthquakeDetails'
+import { EarthquakeList } from './EarthquakeList'
+import { MagnitudeFilter } from './MagnitudeFilter'
 import styles from './WeekEarthquakesPage.module.scss'
 
 type LoadStatus = 'loading' | 'error' | 'success'
 
 export function WeekEarthquakesPage() {
-  const today = useMemo(() => startOfLocalDay(new Date()), [])
+  const today = useLocalToday()
   const monday = useMemo(() => getWeekMonday(today), [today])
   const weekDays = useMemo(() => getWeekDays(monday), [monday])
   const sunday = weekDays[6] ?? monday
 
-  const [selectedDay, setSelectedDay] = useState<Date>(today)
+  const [pinnedDay, setPinnedDay] = useState<Date | null>(null)
   const [minMagnitude, setMinMagnitude] = useState<MagnitudeFilterValue>(0)
   const [selectedId, setSelectedId] = useState<string | null>(null)
   const [items, setItems] = useState<Earthquake[]>([])
   const [status, setStatus] = useState<LoadStatus>('loading')
   const [errorMessage, setErrorMessage] = useState<string | null>(null)
   const [reloadToken, setReloadToken] = useState(0)
+
+  const selectedDay = useMemo(() => {
+    if (
+      pinnedDay &&
+      weekDays.some((day) => isSameLocalDay(day, pinnedDay))
+    ) {
+      return weekDays.find((day) => isSameLocalDay(day, pinnedDay)) ?? today
+    }
+    return today
+  }, [pinnedDay, weekDays, today])
 
   useEffect(() => {
     const controller = new AbortController()
@@ -57,7 +68,7 @@ export function WeekEarthquakesPage() {
         setStatus('error')
         setErrorMessage(
           error instanceof Error
-            ? `Не удалось загрузить данные: ${error.message}`
+            ? error.message
             : 'Не удалось загрузить данные.',
         )
       }
@@ -68,14 +79,22 @@ export function WeekEarthquakesPage() {
     return () => controller.abort()
   }, [monday, sunday, reloadToken])
 
+  const dayItems = useMemo(() => {
+    return items.filter((item) =>
+      isSameLocalDay(new Date(item.timeMs), selectedDay),
+    )
+  }, [items, selectedDay])
+
   const visibleItems = useMemo(() => {
-    return items
-      .filter((item) => isSameLocalDay(new Date(item.timeMs), selectedDay))
-      .filter((item) => (item.magnitude ?? -Infinity) >= minMagnitude)
-  }, [items, selectedDay, minMagnitude])
+    return dayItems.filter((item) =>
+      passesMagnitudeFilter(item.magnitude, minMagnitude),
+    )
+  }, [dayItems, minMagnitude])
 
   const selectedEarthquake =
     visibleItems.find((item) => item.id === selectedId) ?? null
+
+  const emptyReason = dayItems.length === 0 ? 'no-events' : 'filtered'
 
   return (
     <div className={styles.page}>
@@ -87,7 +106,13 @@ export function WeekEarthquakesPage() {
             Список событий за выбранный день. Карта появится позже.
           </p>
         </div>
-        <MagnitudeFilter value={minMagnitude} onChange={setMinMagnitude} />
+        <MagnitudeFilter
+          value={minMagnitude}
+          onChange={(value) => {
+            setMinMagnitude(value)
+            setSelectedId(null)
+          }}
+        />
       </header>
 
       <DaySelector
@@ -95,7 +120,7 @@ export function WeekEarthquakesPage() {
         selectedDay={selectedDay}
         today={today}
         onSelect={(day) => {
-          setSelectedDay(day)
+          setPinnedDay(day)
           setSelectedId(null)
         }}
       />
@@ -107,6 +132,7 @@ export function WeekEarthquakesPage() {
             selectedId={selectedEarthquake?.id ?? null}
             status={status}
             errorMessage={errorMessage}
+            emptyReason={emptyReason}
             onSelect={setSelectedId}
             onRetry={() => setReloadToken((value) => value + 1)}
           />

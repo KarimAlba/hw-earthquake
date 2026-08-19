@@ -39,13 +39,6 @@ export function endOfLocalDay(date: Date): Date {
   return result
 }
 
-export function toIsoDate(date: Date): string {
-  const year = date.getFullYear()
-  const month = String(date.getMonth() + 1).padStart(2, '0')
-  const day = String(date.getDate()).padStart(2, '0')
-  return `${year}-${month}-${day}`
-}
-
 const WEEKDAY_LABELS_RU = ['пн', 'вт', 'ср', 'чт', 'пт', 'сб', 'вс'] as const
 
 export function getWeekdayLabelRu(date: Date): string {

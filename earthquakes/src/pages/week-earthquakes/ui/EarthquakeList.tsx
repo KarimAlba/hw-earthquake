@@ -2,11 +2,14 @@ import type { Earthquake } from '@/entities/earthquake'
 import { formatDateTimeRu, formatMagnitude } from '@/shared/lib/format'
 import styles from './EarthquakeList.module.scss'
 
+export type ListEmptyReason = 'no-events' | 'filtered'
+
 type EarthquakeListProps = {
   items: Earthquake[]
   selectedId: string | null
   status: 'loading' | 'error' | 'success'
   errorMessage: string | null
+  emptyReason: ListEmptyReason
   onSelect: (id: string) => void
   onRetry: () => void
 }
@@ -16,6 +19,7 @@ export function EarthquakeList({
   selectedId,
   status,
   errorMessage,
+  emptyReason,
   onSelect,
   onRetry,
 }: EarthquakeListProps) {
@@ -36,7 +40,11 @@ export function EarthquakeList({
 
   if (items.length === 0) {
     return (
-      <p className={styles.state}>За этот день землетрясений нет</p>
+      <p className={styles.state}>
+        {emptyReason === 'filtered'
+          ? 'Нет событий, подходящих под фильтр магнитуды'
+          : 'За этот день землетрясений нет'}
+      </p>
     )
   }
 
@@ -56,7 +64,9 @@ export function EarthquakeList({
               <span className={styles.mag}>{formatMagnitude(item.magnitude)}</span>
               <span className={styles.body}>
                 <span className={styles.place}>{item.place}</span>
-                <span className={styles.time}>{formatDateTimeRu(item.timeMs)}</span>
+                <span className={styles.time}>
+                  {formatDateTimeRu(item.timeMs)}
+                </span>
               </span>
             </button>
           </li>

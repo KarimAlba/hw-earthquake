@@ -7,3 +7,14 @@ export const MAGNITUDE_FILTER_OPTIONS = [
 
 export type MagnitudeFilterValue =
   (typeof MAGNITUDE_FILTER_OPTIONS)[number]['value']
+
+export function passesMagnitudeFilter(
+  magnitude: number | null,
+  minMagnitude: MagnitudeFilterValue,
+): boolean {
+  if (minMagnitude === 0) {
+    return true
+  }
+
+  return (magnitude ?? -Infinity) >= minMagnitude
+}

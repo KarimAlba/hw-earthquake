@@ -49,12 +49,10 @@ npm run preview
 
 ```text
 earthquakes/src/
-  app/                 # точка входа UI, глобальные стили
-  pages/week-earthquakes/
-  widgets/             # day-selector, earthquake-list, earthquake-details
-  features/filter-by-magnitude/
-  entities/earthquake/ # модель + USGS API
-  shared/              # week/format helpers, http, config
+  app/                      # точка входа UI, глобальные стили
+  pages/week-earthquakes/   # экран: ui + model + lib
+  entities/earthquake/      # модель + USGS API
+  shared/                   # week/format helpers, http, config
 ```
 
 Подробности по приёмке — в [`SPEC.md`](./SPEC.md). Правила для агента — в [`AGENTS.md`](./AGENTS.md).

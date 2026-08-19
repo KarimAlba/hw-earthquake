@@ -1,7 +1,7 @@
 import {
   MAGNITUDE_FILTER_OPTIONS,
   type MagnitudeFilterValue,
-} from '../model/options'
+} from '../model/magnitudeFilter'
 import styles from './MagnitudeFilter.module.scss'
 
 type MagnitudeFilterProps = {
@@ -13,7 +13,11 @@ export function MagnitudeFilter({ value, onChange }: MagnitudeFilterProps) {
   return (
     <fieldset className={styles.root}>
       <legend className={styles.legend}>Магнитуда</legend>
-      <div className={styles.options} role="radiogroup" aria-label="Фильтр по магнитуде">
+      <div
+        className={styles.options}
+        role="radiogroup"
+        aria-label="Фильтр по магнитуде"
+      >
         {MAGNITUDE_FILTER_OPTIONS.map((option) => {
           const id = `mag-${option.value}`
           return (
